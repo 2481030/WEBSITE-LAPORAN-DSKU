@@ -181,17 +181,25 @@
 </head>
 <body class="antialiased">
 
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex h-screen overflow-hidden relative">
+        <!-- OVERLAY (mobile only) -->
+        <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/50 z-30 lg:hidden hidden"></div>
+
         <!-- SIDEBAR -->
-        <div class="sidebar w-64 flex flex-col h-full shadow-2xl z-20">
-            <div class="p-6 flex flex-col items-center border-b border-white/5 gap-3">
-                <div class="brand-seal">
-                    <i class="fa-solid fa-dove text-lg" style="color: var(--gold-300);"></i>
+        <div id="sidebar" class="sidebar w-72 sm:w-64 flex flex-col h-full shadow-2xl z-40 fixed lg:relative inset-y-0 left-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="p-6 flex items-center justify-between border-b border-white/5 gap-3 lg:justify-center lg:flex-col">
+                <div class="flex items-center gap-3 lg:flex-col">
+                    <div class="brand-seal shrink-0">
+                        <i class="fa-solid fa-dove text-lg" style="color: var(--gold-300);"></i>
+                    </div>
+                    <div class="text-left lg:text-center">
+                        <span class="block text-lg font-display font-semibold text-white tracking-wide">DSKU Report</span>
+                        <span class="block text-[11px] tagline text-white/50 mt-0.5">Sumatera Kawasan Utara</span>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <span class="block text-lg font-display font-semibold text-white tracking-wide">DSKU Report</span>
-                    <span class="block text-[11px] tagline text-white/50 mt-0.5">Sumatera Kawasan Utara</span>
-                </div>
+                <button onclick="closeSidebar()" class="lg:hidden text-white/60 hover:text-white text-xl px-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
             <div class="flex-1 overflow-y-auto py-4 space-y-1" id="sidebar-menu">
@@ -244,46 +252,51 @@
                 </a>
             </div>
 
-            <div class="p-5 border-t border-white/5 text-center">
+            <div class="p-5 border-t border-white/5 text-center hidden sm:block">
                 <span class="text-[10px] tagline text-white/35">"Melaporkan dengan setia, melayani dengan sukacita"</span>
             </div>
         </div>
 
         <!-- MAIN -->
-        <div class="flex-1 flex flex-col h-full overflow-y-auto">
-            <header class="glass-header px-8 py-4 flex items-center justify-between sticky top-0 z-10">
-                <div>
-                    <p class="section-eyebrow uppercase">Laporan Resmi Triwulan</p>
-                    <h1 class="text-xl font-display font-semibold" style="color:var(--maroon-900);">Pelayanan Jemaat</h1>
-                    <p class="text-xs" style="color:var(--ink-600);">Daerah Sumatera Kawasan Utara</p>
+        <div class="flex-1 flex flex-col h-full overflow-y-auto w-full min-w-0">
+            <header class="glass-header px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sticky top-0 z-20">
+                <div class="flex items-center gap-3">
+                    <button onclick="openSidebar()" class="lg:hidden shrink-0 w-9 h-9 rounded-lg flex items-center justify-center border" style="border-color:var(--line); color:var(--maroon-900);">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="min-w-0">
+                        <p class="section-eyebrow uppercase">Laporan Resmi Triwulan</p>
+                        <h1 class="text-lg sm:text-xl font-display font-semibold truncate" style="color:var(--maroon-900);">Pelayanan Jemaat</h1>
+                        <p class="text-xs hidden sm:block" style="color:var(--ink-600);">Daerah Sumatera Kawasan Utara</p>
+                    </div>
                 </div>
 
-                <div class="flex space-x-5 bg-white/60 px-4 py-2.5 rounded-xl border" style="border-color:var(--line);">
-                    <div class="flex flex-col">
+                <div class="flex flex-wrap gap-3 sm:gap-5 bg-white/60 px-3 sm:px-4 py-2.5 rounded-xl border overflow-x-auto" style="border-color:var(--line);">
+                    <div class="flex flex-col shrink-0">
                         <label class="text-[9px] uppercase tracking-wider" style="color:var(--ink-600);">Pendeta</label>
-                        <input type="text" id="header-pendeta" placeholder="—" class="meta-field bg-transparent text-sm w-24 focus:outline-none">
+                        <input type="text" id="header-pendeta" placeholder="—" class="meta-field bg-transparent text-sm w-20 sm:w-24 focus:outline-none">
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col shrink-0">
                         <label class="text-[9px] uppercase tracking-wider" style="color:var(--ink-600);">Distrik</label>
-                        <input type="text" id="header-distrik" placeholder="—" class="meta-field bg-transparent text-sm w-20 focus:outline-none">
+                        <input type="text" id="header-distrik" placeholder="—" class="meta-field bg-transparent text-sm w-16 sm:w-20 focus:outline-none">
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col shrink-0">
                         <label class="text-[9px] uppercase tracking-wider" style="color:var(--ink-600);">Triwulan</label>
-                        <input type="text" id="header-triwulan" placeholder="—" class="meta-field bg-transparent text-sm w-12 focus:outline-none">
+                        <input type="text" id="header-triwulan" placeholder="—" class="meta-field bg-transparent text-sm w-10 sm:w-12 focus:outline-none">
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col shrink-0">
                         <label class="text-[9px] uppercase tracking-wider" style="color:var(--ink-600);">Tahun</label>
-                        <input type="number" id="header-tahun" value="2026" class="meta-field bg-transparent text-sm w-14 focus:outline-none">
+                        <input type="number" id="header-tahun" value="2026" class="meta-field bg-transparent text-sm w-12 sm:w-14 focus:outline-none">
                     </div>
                 </div>
             </header>
 
-            <main class="p-8 max-w-7xl w-full mx-auto flex-1">
+            <main class="p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto flex-1">
 
                 <!-- RINGKASAN -->
                 <div id="ringkasan" class="dept-content active space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        <div class="kpi-card p-6 flex items-center justify-between">
+                        <div class="kpi-card p-4 sm:p-6 flex items-center justify-between">
                             <div class="pl-2">
                                 <p class="text-xs uppercase tracking-wide" style="color:var(--ink-600);">Total Anggota Jemaat</p>
                                 <h3 class="text-3xl font-display font-semibold mt-1" style="color:var(--maroon-900);">1,240</h3>
@@ -291,7 +304,7 @@
                             </div>
                             <div class="p-3 rounded-xl" style="background:var(--cream-100); color:var(--crimson-600);"><i class="fa-solid fa-users text-2xl"></i></div>
                         </div>
-                        <div class="kpi-card p-6 flex items-center justify-between">
+                        <div class="kpi-card p-4 sm:p-6 flex items-center justify-between">
                             <div class="pl-2">
                                 <p class="text-xs uppercase tracking-wide" style="color:var(--ink-600);">Total Baptisan Baru</p>
                                 <h3 class="text-3xl font-display font-semibold mt-1" style="color:var(--maroon-900);">32</h3>
@@ -299,7 +312,7 @@
                             </div>
                             <div class="p-3 rounded-xl" style="background:var(--cream-100); color:var(--crimson-600);"><i class="fa-solid fa-water text-2xl"></i></div>
                         </div>
-                        <div class="kpi-card p-6 flex items-center justify-between">
+                        <div class="kpi-card p-4 sm:p-6 flex items-center justify-between">
                             <div class="pl-2">
                                 <p class="text-xs uppercase tracking-wide" style="color:var(--ink-600);">Anggota Aktif SS</p>
                                 <h3 class="text-3xl font-display font-semibold mt-1" style="color:var(--maroon-900);">850</h3>
@@ -307,7 +320,7 @@
                             </div>
                             <div class="p-3 rounded-xl" style="background:var(--cream-100); color:var(--crimson-600);"><i class="fa-solid fa-book-bookmark text-2xl"></i></div>
                         </div>
-                        <div class="kpi-card p-6 flex items-center justify-between">
+                        <div class="kpi-card p-4 sm:p-6 flex items-center justify-between">
                             <div class="pl-2">
                                 <p class="text-xs uppercase tracking-wide" style="color:var(--ink-600);">KPA / Kelompok Kecil</p>
                                 <h3 class="text-3xl font-display font-semibold mt-1" style="color:var(--maroon-900);">18</h3>
@@ -318,12 +331,12 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="panel p-6">
+                        <div class="panel p-4 sm:p-6">
                             <p class="section-eyebrow uppercase mb-1">Demografi</p>
                             <h4 class="text-md font-display font-semibold mb-4" style="color:var(--maroon-900);">Anggota Sekolah Sabat</h4>
                             <div class="h-64 flex justify-center"><canvas id="ssDemographicChart"></canvas></div>
                         </div>
-                        <div class="panel p-6">
+                        <div class="panel p-4 sm:p-6">
                             <p class="section-eyebrow uppercase mb-1">Tren</p>
                             <h4 class="text-md font-display font-semibold mb-4" style="color:var(--maroon-900);">Kehadiran Ibadah Triwulan Ini</h4>
                             <div class="h-64"><canvas id="attendanceChart"></canvas></div>
@@ -333,7 +346,7 @@
 
                 <!-- SEKOLAH SABAT -->
                 <div id="sekolah-sabat" class="dept-content space-y-6">
-                    <div class="flex justify-between items-center panel px-6 py-4">
+                    <div class="flex flex-wrap gap-3 justify-between items-center panel px-4 sm:px-6 py-4">
                         <div>
                             <p class="section-eyebrow uppercase">Departemen</p>
                             <h2 class="text-lg font-display font-semibold" style="color:var(--maroon-900);"><i class="fa-solid fa-book-open mr-2" style="color:var(--crimson-600);"></i> Sekolah Sabat</h2>
@@ -342,7 +355,8 @@
                     </div>
 
                     <div class="panel overflow-hidden">
-                        <table class="w-full border-collapse text-left text-sm report-table">
+                        <div class="overflow-x-auto">
+                        <table class="w-full border-collapse text-left text-sm report-table min-w-[560px]">
                             <thead>
                                 <tr>
                                     <th class="px-6 py-3 w-12 uppercase">No</th>
@@ -384,12 +398,13 @@
                                 <tr><td class="px-6 py-3 font-medium">29</td><td class="px-6 py-3">Jumlah KK yang aktif</td><td class="px-6 py-2"><input type="number" class="report-input w-full p-2 text-center" value="0"></td></tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 
                 <!-- PENGINJILAN PERORANGAN -->
                 <div id="penginjilan-perorangan" class="dept-content space-y-6">
-                    <div class="flex justify-between items-center panel px-6 py-4">
+                    <div class="flex flex-wrap gap-3 justify-between items-center panel px-4 sm:px-6 py-4">
                         <div>
                             <p class="section-eyebrow uppercase">Departemen</p>
                             <h2 class="text-lg font-display font-semibold" style="color:var(--maroon-900);"><i class="fa-solid fa-users-rays mr-2" style="color:var(--crimson-600);"></i> Penginjilan Perorangan</h2>
@@ -397,7 +412,8 @@
                         <button onclick="saveData()" class="btn-primary px-5 py-2.5 rounded-lg text-sm font-medium">Simpan</button>
                     </div>
                     <div class="panel overflow-hidden">
-                        <table class="w-full text-left text-sm report-table">
+                        <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm report-table min-w-[480px]">
                             <thead>
                                 <tr><th class="px-6 py-3 w-12 uppercase">No</th><th class="px-6 py-3 uppercase">Indikator</th><th class="px-6 py-3 w-48 text-center uppercase">Data Input</th></tr>
                             </thead>
@@ -413,17 +429,18 @@
                                 <tr><td class="px-6 py-3">7</td><td class="px-6 py-3">Jumlah Pelmas</td><td><input type="number" class="report-input w-full p-2 text-center" value="0"></td></tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 
                 <!-- PLACEHOLDER GENERIK -->
-                <div id="generic-placeholder" class="dept-content panel p-8 text-center space-y-4">
+                <div id="generic-placeholder" class="dept-content panel p-4 sm:p-8 text-center space-y-4">
                     <div class="p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto" style="background:var(--cream-100); color:var(--crimson-600);"><i class="fa-solid fa-folder-open text-2xl"></i></div>
                     <p class="section-eyebrow uppercase" id="placeholder-eyebrow">Departemen</p>
                     <h3 class="text-lg font-display font-semibold" style="color:var(--maroon-900);" id="placeholder-title">Nama Departemen</h3>
                     <p class="text-sm max-w-md mx-auto tagline" style="color:var(--ink-600);">Formulasi data dan tabel input terintegrasi otomatis untuk triwulan berjalan sesuai template dokumen resmi DSKU.</p>
                     <div class="overflow-x-auto text-left mt-6">
-                        <table class="w-full border-collapse text-sm report-table">
+                        <table class="w-full border-collapse text-sm report-table min-w-[480px]">
                             <thead>
                                 <tr><th class="px-6 py-3 w-12 uppercase text-left">No</th><th class="px-6 py-3 uppercase text-left">Indikator Kinerja Departemen</th><th class="px-6 py-3 w-48 text-center uppercase">Nilai Triwulan</th></tr>
                             </thead>
@@ -453,6 +470,16 @@
             'pendidikan': ["Jumlah guru indeks", "Jumlah guru non indeks", "Jumlah guru SDA", "Jumlah guru non SDA", "Jumlah siswa SDA", "Jumlah siswa non SDA", "Jumlah guru yang belum mengikuti summer school.", "Jumlah KPA", "Jumlah baptisan"]
         };
 
+        // ---------- Kontrol Sidebar Mobile ----------
+        function openSidebar() {
+            document.getElementById('sidebar').classList.remove('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.remove('hidden');
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.add('hidden');
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
 
@@ -461,6 +488,14 @@
             }
 
             document.querySelectorAll('.dept-content').forEach(content => content.classList.remove('active'));
+
+            // Tutup sidebar otomatis di layar mobile/tablet setelah memilih menu
+            if (window.innerWidth < 1024) {
+                closeSidebar();
+            }
+            // Scroll ke atas konten setiap ganti tab, supaya nyaman dibaca di layar kecil
+            const mainScroll = document.querySelector('main').closest('.overflow-y-auto');
+            if (mainScroll) mainScroll.scrollTop = 0;
 
             const specificSection = document.getElementById(tabId);
             if (specificSection) {
